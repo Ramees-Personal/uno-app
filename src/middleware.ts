@@ -1,5 +1,6 @@
 import {clerkMiddleware} from '@clerk/nextjs/server';
 import {NextResponse} from 'next/server';
+import {isUnderConstruction} from "@/lib/utils";
 
 const PUBLIC_PATHS = [
     '/',
@@ -8,6 +9,14 @@ const PUBLIC_PATHS = [
 ];
 
 export default clerkMiddleware(async (auth, req) => {
+
+    if (isUnderConstruction) {
+        if (req.nextUrl.pathname === '/') {
+            return NextResponse.next()
+        }
+        return NextResponse.redirect(new URL('/', req.url));
+    }
+
     const {pathname} = req.nextUrl;
 
     // Allow public paths

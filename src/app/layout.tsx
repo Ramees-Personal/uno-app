@@ -4,6 +4,7 @@ import "./globals.css";
 import {ClerkProvider} from "@/components/clerk-provider";
 import {ThemeProvider} from "next-themes";
 import {dark} from "@clerk/themes";
+import {isUnderConstruction} from "@/lib/utils";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -25,6 +26,15 @@ export default function RootLayout({
                                    }: Readonly<{
     children: React.ReactNode;
 }>) {
+    if (isUnderConstruction) return (
+        <html lang="en">
+        <body
+            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+        {children}
+        </body>
+        </html>
+    )
     return (
         <ClerkProvider
             appearance={{theme: dark}}
