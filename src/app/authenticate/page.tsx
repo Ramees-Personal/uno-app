@@ -5,10 +5,17 @@ import Loader from "@/components/Loader";
 import {createPlayer, getPlayerByUserId, updatePlayer} from "@/lib/database/actions";
 import {redirect} from "next/navigation";
 import {UserResource} from "@clerk/types";
+import {isUnderConstruction} from "@/lib/utils";
 
 
 const AuthenticatePage = () => {
-    const {isSignedIn, user} = useUser();
+    if(isUnderConstruction) return (
+        <div className="flex justify-center items-center h-screen">
+            <Loader/>
+        </div>
+    );
+
+    /*const {isSignedIn, user} = useUser();
 
     useEffect(() => {
         const fetchPlayer = async (user: UserResource) => {
@@ -46,7 +53,7 @@ const AuthenticatePage = () => {
     }, [isSignedIn, user]);
     return (
         <Loader text="Authenticating..."/>
-    );
+    );*/
 };
 
 export default AuthenticatePage;

@@ -3,9 +3,17 @@
 import {AuthenticateWithRedirectCallback, useUser} from '@clerk/nextjs';
 import {useEffect} from 'react';
 import Loader from "@/components/Loader";
+import {isUnderConstruction} from "@/lib/utils";
 
 export default function SSOCallback() {
-    const {isSignedIn, user} = useUser();
+
+    if (isUnderConstruction) return (
+        <div className="flex justify-center items-center h-screen">
+            <Loader/>
+        </div>
+    );
+
+    /*const {isSignedIn, user} = useUser();
 
     useEffect(() => {
         if (isSignedIn && user) {
@@ -22,5 +30,5 @@ export default function SSOCallback() {
                 <AuthenticateWithRedirectCallback/>
             </div>
         </div>
-    );
+    );*/
 }
