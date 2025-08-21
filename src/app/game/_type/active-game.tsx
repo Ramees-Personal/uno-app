@@ -77,12 +77,11 @@ const ActiveGamePage = (gameDetails: GameDetails) => {
                         {lastRound.scores.map(score => {
                             const player = gameDetails.players.find(p => p.id === score.playerId);
                             if (!player) return null;
-                            const isWinner = lastRound.round.winnerId === player.id;
                             return (
                                 <div
                                     key={player.id}
                                     className={`flex justify-between p-2 rounded-md ${
-                                        isWinner ? 'bg-green-100 font-bold' : ''
+                                         ''
                                     }`}
                                 >
                                     <span>{player.name}</span>

@@ -8,7 +8,6 @@ export const rounds = pgTable(
         id: uuid("id").defaultRandom().primaryKey(),
         gameId: uuid("game_id").notNull().references(() => games.id, {onDelete: "cascade"}),
         roundNumber: integer("round_number").notNull(),
-        winnerId: uuid("winner_id").references(() => players.id),
         createdAt: timestamp("created_at", {withTimezone: true}).defaultNow().notNull(),
         updatedAt: timestamp("updated_at", {withTimezone: true})
             .notNull()

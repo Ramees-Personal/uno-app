@@ -10,8 +10,6 @@ export type RoundWithScores = {
     id: string;
     gameId: string;
     roundNumber: number;
-    status: string;
-    winnerId: string | null;
     createdAt: Date;
     updatedAt: Date;
     scores: {
@@ -26,7 +24,6 @@ export async function createRound(gameId: string, roundNumber: number) {
         id: uuid(),
         gameId,
         roundNumber,
-        status: "pending",
     }).returning();
 
     // Get all players in the game
@@ -43,20 +40,6 @@ export async function createRound(gameId: string, roundNumber: number) {
             score: 0,
         }))
     );
-
-    return round;
-}
-
-// End round & optionally assign winner
-export async function endRound(roundId: string, winnerId?: string) {
-    const [round] = await database.update(rounds)
-        .set({
-            status: "completed",
-            winnerId: winnerId ?? null,
-            updatedAt: new Date(),
-        })
-        .where(eq(rounds.id, roundId))
-        .returning();
 
     return round;
 }
